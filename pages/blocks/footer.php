@@ -38,7 +38,12 @@
   <!-- Datatable start -->
   <script>
     $(document).ready(function() {
-      $('#locations').DataTable();
+      $('#locations').DataTable({
+        "lengthMenu": [
+          [5, 10, -1],
+          [5, 10, "All"]
+        ]
+      });
     });
   </script>
   <script src="https://code.jquery.com/jquery-3.3.1.js"></script>

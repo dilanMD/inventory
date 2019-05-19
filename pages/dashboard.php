@@ -7,13 +7,13 @@
                 <div class="row">
                   <div class="col-5 col-md-4">
                     <div class="icon-big text-center icon-warning">
-                      <i class="nc-icon nc-globe text-warning"></i>
+                      <i class="nc-icon nc-tv-2 text-warning"></i>
                     </div>
                   </div>
                   <div class="col-7 col-md-8">
                     <div class="numbers">
-                      <p class="card-category">Capacity</p>
-                      <p class="card-title">150GB
+                      <p class="card-category">PC</p>
+                      <p class="card-title">50
                         <p>
                     </div>
                   </div>
@@ -22,7 +22,7 @@
               <div class="card-footer ">
                 <hr>
                 <div class="stats">
-                  <i class="fa fa-refresh"></i> Update Now
+                  <!-- <i class="fa fa-refresh"></i> --> Last updated on <span class="text-warning"><strong>18-05-2019</strong></span>
                 </div>
               </div>
             </div>
@@ -33,13 +33,13 @@
                 <div class="row">
                   <div class="col-5 col-md-4">
                     <div class="icon-big text-center icon-warning">
-                      <i class="nc-icon nc-money-coins text-success"></i>
+                      <i class="nc-icon nc-box text-primary"></i>
                     </div>
                   </div>
                   <div class="col-7 col-md-8">
                     <div class="numbers">
-                      <p class="card-category">Revenue</p>
-                      <p class="card-title">$ 1,345
+                      <p class="card-category">UPS</p>
+                      <p class="card-title">20
                         <p>
                     </div>
                   </div>
@@ -48,7 +48,7 @@
               <div class="card-footer ">
                 <hr>
                 <div class="stats">
-                  <i class="fa fa-calendar-o"></i> Last day
+                  <!-- <i class="fa fa-refresh"></i> --> Last updated on <span class="text-primary"><strong>18-05-2019</strong></span>
                 </div>
               </div>
             </div>
@@ -59,13 +59,13 @@
                 <div class="row">
                   <div class="col-5 col-md-4">
                     <div class="icon-big text-center icon-warning">
-                      <i class="nc-icon nc-vector text-danger"></i>
+                      <i class="nc-icon nc-pin-3 text-success"></i>
                     </div>
                   </div>
                   <div class="col-7 col-md-8">
                     <div class="numbers">
-                      <p class="card-category">Errors</p>
-                      <p class="card-title">23
+                      <p class="card-category">LOCATIONS</p>
+                      <p class="card-title">12
                         <p>
                     </div>
                   </div>
@@ -74,7 +74,7 @@
               <div class="card-footer ">
                 <hr>
                 <div class="stats">
-                  <i class="fa fa-clock-o"></i> In the last hour
+                  <!-- <i class="fa fa-refresh"></i> --> Last updated on <span class="text-success"><strong>18-05-2019</strong></span>
                 </div>
               </div>
             </div>
@@ -85,13 +85,13 @@
                 <div class="row">
                   <div class="col-5 col-md-4">
                     <div class="icon-big text-center icon-warning">
-                      <i class="nc-icon nc-favourite-28 text-primary"></i>
+                      <i class="nc-icon nc-single-02 text-danger"></i>
                     </div>
                   </div>
                   <div class="col-7 col-md-8">
                     <div class="numbers">
-                      <p class="card-category">Followers</p>
-                      <p class="card-title">+45K
+                      <p class="card-category">USERS</p>
+                      <p class="card-title">50
                         <p>
                     </div>
                   </div>
@@ -100,7 +100,7 @@
               <div class="card-footer ">
                 <hr>
                 <div class="stats">
-                  <i class="fa fa-refresh"></i> Update now
+                  <!-- <i class="fa fa-refresh"></i> --> Last updated on <span class="text-danger"><strong>18-05-2019</strong></span>
                 </div>
               </div>
             </div>
