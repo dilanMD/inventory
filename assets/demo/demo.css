@@ -187,3 +187,6 @@
   outline: none;
   display: none;
 }
+
+/* CUSTOM STYLES */
+th.dt-center, td.dt-center { text-align: center; }

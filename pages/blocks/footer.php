@@ -42,6 +42,12 @@
   <script>
     $(document).ready(function() {
       $('#locations').DataTable({
+        "columnDefs": [
+          {
+            "className": "dt-center", 
+            "targets": [1, 2, 3, 4, 5]
+          }
+        ],
         "lengthMenu": [
           [5, 10, -1],
           [5, 10, "All"]

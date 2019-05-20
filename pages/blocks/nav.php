@@ -1,3 +1,7 @@
+<?php 
+  $url = $_SERVER['REQUEST_URI'];
+  $menuName = substr_replace(substr($url, 17), "", -4);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,6 +17,7 @@
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
   <!-- CSS Files -->
   <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
   <link href="../assets/css/paper-dashboard.css?v=2.0.0" rel="stylesheet" />
@@ -38,7 +43,7 @@
           </div>
         </a>
         <a href="dashboard.php" class="simple-text logo-normal">
-          Inventory
+          Inventory 
           <!-- <div class="logo-image-big">
             <img src="../assets/img/logo-big.png">
           </div> -->
@@ -46,7 +51,7 @@
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
-          <li class="active ">
+          <li class="active">
             <a href="./dashboard.php">
               <i class="nc-icon nc-tile-56"></i>
               <p>Dashboard</p>
@@ -85,7 +90,7 @@
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand">Dashboard</a>
+            <a class="navbar-brand"><?php echo $menuName; ?></a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>

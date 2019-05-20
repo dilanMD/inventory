@@ -113,10 +113,9 @@ if (isset($_POST['submit'])){
                           <td><?php echo $row['location_name']; ?></td>
                           <td><?php echo $row['floor']; ?></td>
                           <td><?php echo $row['users']; ?></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          
+                          <td><i class="fas fa-table text-info"></i></td>
+                          <td><i class="fas fa-pencil-alt text-warning"></i></td>
+                          <td><i class="fas fa-trash-alt text-danger"></i></td>
                       </tr>
                       <?php }} ?>
                   </tbody>
