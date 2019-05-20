@@ -1,5 +1,17 @@
 <?php require 'assets/connection.php' ?>
 <?php
+//TOTAL PC
+$pc = mysqli_query($conn, "SELECT * FROM inventories WHERE 
+  device = 'All in one PC' || 
+  device = 'CPU' || 
+  device = 'Server PC' || 
+  device = 'Laptop'");
+$pcCount = mysqli_num_rows($pc);
+
+//TOTAL UPS
+$ups = mysqli_query($conn, "SELECT * FROM inventories WHERE device = 'UPS'");
+$upsCount = mysqli_num_rows($ups);
+  
 //TOTAL LOCATIONS
 $location = mysqli_query($conn, "SELECT * FROM locations");
 $locationCount = mysqli_num_rows($location);
@@ -24,7 +36,7 @@ $usersCount = mysqli_num_rows($users);
                   <div class="col-7 col-md-8">
                     <div class="numbers">
                       <p class="card-category">PC</p>
-                      <p class="card-title">50
+                      <p class="card-title"><?php echo $pcCount; ?>
                         <p>
                     </div>
                   </div>
@@ -50,7 +62,7 @@ $usersCount = mysqli_num_rows($users);
                   <div class="col-7 col-md-8">
                     <div class="numbers">
                       <p class="card-category">UPS</p>
-                      <p class="card-title">20
+                      <p class="card-title"><?php echo $upsCount; ?>
                         <p>
                     </div>
                   </div>
