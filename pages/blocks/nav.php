@@ -16,6 +16,8 @@
   <!-- CSS Files -->
   <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
   <link href="../assets/css/paper-dashboard.css?v=2.0.0" rel="stylesheet" />
+  <!--  SELECT2 PLUGIN -->
+  <link href='../../select2/dist/css/select2.min.css' rel='stylesheet' type='text/css'>
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="../assets/demo/demo.css" rel="stylesheet" />
   <!-- Datatables stylesheet -->
@@ -46,7 +48,7 @@
         <ul class="nav">
           <li class="active ">
             <a href="./dashboard.php">
-              <i class="nc-icon nc-bank"></i>
+              <i class="nc-icon nc-tile-56"></i>
               <p>Dashboard</p>
             </a>
           </li>
@@ -54,6 +56,18 @@
             <a href="./locations.php">
               <i class="nc-icon nc-pin-3"></i>
               <p>Locations</p>
+            </a>
+          </li>
+          <li>
+            <a href="./users.php">
+              <i class="nc-icon nc-single-02"></i>
+              <p>Users</p>
+            </a>
+          </li>
+          <li>
+            <a href="./inventories.php">
+              <i class="nc-icon nc-tv-2"></i>
+              <p>Inventories</p>
             </a>
           </li>
           <li>

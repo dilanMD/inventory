@@ -1,3 +1,14 @@
+<?php require 'assets/connection.php' ?>
+<?php
+//TOTAL LOCATIONS
+$location = mysqli_query($conn, "SELECT * FROM locations");
+$locationCount = mysqli_num_rows($location);
+
+//TOTAL USERS
+$users = mysqli_query($conn, "SELECT * FROM users");
+$usersCount = mysqli_num_rows($users);
+  
+?>
 <?php require './blocks/nav.php'; ?>
       <div class="content">
         <div class="row">
@@ -65,7 +76,7 @@
                   <div class="col-7 col-md-8">
                     <div class="numbers">
                       <p class="card-category">LOCATIONS</p>
-                      <p class="card-title">12
+                      <p class="card-title"> <?php echo $locationCount; ?>
                         <p>
                     </div>
                   </div>
@@ -91,7 +102,7 @@
                   <div class="col-7 col-md-8">
                     <div class="numbers">
                       <p class="card-category">USERS</p>
-                      <p class="card-title">50
+                      <p class="card-title"> <?php echo $usersCount; ?>
                         <p>
                     </div>
                   </div>
