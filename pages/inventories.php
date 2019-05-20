@@ -10,14 +10,21 @@ $selectLocationResult = $conn->query($selectLocation);
 $selectUser = "SELECT * FROM users";
 $selectUserResult = $conn->query($selectUser);
 
-//INSERT USER
+//RETRIEVE INVENTORIES
+$selectInventory = "SELECT * FROM inventories";
+$selectInventoryResult = $conn->query($selectInventory);
+
+//INSERT INVENTORY
 if (isset($_POST['submit'])) {
-    $username = $_POST['username'];
-    $location = $_POST['location'];
-    
-    $insertUser = "INSERT INTO `inventory`.`users` (`user_id`, `user_name`, `location_id`) VALUES (NULL, '$username', '$location');";
-    
-    $conn->query($insertUser);
+  $device = $_POST['device'];
+  $brand = $_POST['brand'];
+  $serial = $_POST['serial'];
+  $location = $_POST['location'];
+  $user = $_POST['user'];
+
+  $insertInventory = "INSERT INTO `inventory`.`inventories` (`inventory_id`, `device`, `brand`, `serial`, `location_id`, `user_id`) VALUES (NULL, '$device', '$brand', '$serial', '$location', '$user');";
+
+  $conn->query($insertInventory);
 }
 
 ?>
@@ -40,11 +47,52 @@ if (isset($_POST['submit'])) {
                     </button>
                   </div>
                   <div class="modal-body">
-                    <form method="POST" action="users.php">
+                    <form method="POST" action="inventories.php">
                       <div class="row">
-                        <div class="form-group col col-md-4">
+                        <div class="col col-md-4">
                           <label for="device">Device</label>
-                          <input type="text" name="device" class="form-control" id="device" placeholder="">
+                          <select id="device" name="device" class="form-control" required>
+                            <option value="All in one PC">All in one PC</option>
+                            <option value="Cash Registration Machine">Cash Registration Machine</option>
+                            <option value="Monitor">Monitor</option>
+                            <option value="Mouse">Mouse</option>
+                            <option value="Keyboard">Keyboard</option>
+                            <option value="UPS">UPS</option>
+                            <option value="CPU">CPU</option>
+                            <option value="Dot Matrix Printer">Dot Matrix Printer</option>
+                            <option value="LaserJet">LaserJet</option>
+                            <option value="Colour Printer">Colour Printer</option>
+                            <option value="Sticker Printer">Sticker Printer</option>
+                            <option value="Network Switch">Network Switch</option>
+                            <option value="Network Hub">Network Hub</option>
+                            <option value="Extension Cord">Extension Cord</option>
+                            <option value="UPS Battery">UPS Battery</option>
+                            <option value="Server PC">Server PC</option>
+                            <option value="Network Cable">Network Cable</option>
+                            <option value="Network Clip">Network Clip</option>
+                            <option value="Punching Tool">Punching Tool</option>
+                            <option value="Network Cutter">Network Cutter</option>
+                            <option value="Brush">Brush</option>
+                            <option value="Screwdriver">Screwdriver</option>
+                            <option value="Finger Printer">Finger Printer</option>
+                            <option value="Projector">Projector</option>
+                            <option value="VGA Cable">VGA Cable</option>
+                            <option value="Power Cable">Power Cable</option>
+                            <option value="USB Cable">USB Cable</option>
+                            <option value="USB Network Adapter">USB Network Adapter</option>
+                            <option value="USB Hub">USB Hub</option>
+                            <option value="Harddisk">Harddisk</option>
+                            <option value="Power Supply">Power Supply</option>
+                            <option value="Power Adapter">Power Adapter</option>
+                            <option value="CMOS Battery">CMOS Battery</option>
+                            <option value="Processor Paste">Processor Paste</option>
+                            <option value="Blower">Blower</option>
+                            <option value="Catridge">Catridge</option>
+                            <option value="Toner">Toner</option>
+                            <option value="DVR">DVR</option>
+                            <option value="Laptop">Laptop</option>
+                            <option value="Scanner">Scanner</option>
+                          </select>
                         </div>
                         <div class="form-group col col-md-4">
                             <label for="brand">Brand</label>
@@ -103,25 +151,35 @@ if (isset($_POST['submit'])) {
                   </thead>
                   <tbody>
                       <?php
-                        if($selectUserResult->num_rows > 0) { 
-                        while($row = $selectUserResult->fetch_assoc()) {
+                        if($selectInventoryResult->num_rows > 0) { 
+                        while($row = $selectInventoryResult->fetch_assoc()) {
                           $locationID = $row['location_id'];
+                          $userID = $row['user_id'];
                       ?>
                       <tr>
-                          <td><?php //echo $row['user_name']; ?></td>
+                          <td><?php echo $row['device']; ?></td>
+                          <td><?php echo $row['brand']; ?></td>
+                          <td><?php echo $row['serial']; ?></td>
                           <td>
                             <?php
                               $selectLocationByID = "SELECT * FROM `locations` WHERE `location_id` = '$locationID'";
                               $selectLocationByIDResult = $conn->query($selectLocationByID);
                               if($selectLocationByIDResult->num_rows > 0) {
                                 $row = $selectLocationByIDResult->fetch_assoc();
-                                //echo $row['location_name'];
+                                echo $row['location_name'];
                               }
                             ?>
                           </td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
+                          <td>
+                            <?php
+                              $selectUserByID = "SELECT * FROM `users` WHERE `user_id` = '$userID'";
+                              $selectUserByIDResult = $conn->query($selectUserByID);
+                              if($selectUserByIDResult->num_rows > 0) {
+                                $row = $selectUserByIDResult->fetch_assoc();
+                                echo $row['user_name'];
+                              }
+                            ?>
+                          </td>
                           <td></td>
                           <td></td>
                       </tr>
