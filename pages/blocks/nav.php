@@ -51,25 +51,25 @@
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
-          <li class="active">
+          <li class="<?php if($menuName === 'dashboard') { echo 'active'; } ?>">
             <a href="./dashboard.php">
               <i class="nc-icon nc-tile-56"></i>
               <p>Dashboard</p>
             </a>
           </li>
-          <li>
+          <li class="<?php if($menuName === 'locations') { echo 'active'; } ?>">
             <a href="./locations.php">
               <i class="nc-icon nc-pin-3"></i>
               <p>Locations</p>
             </a>
           </li>
-          <li>
+          <li class="<?php if($menuName === 'users') { echo 'active'; } ?>">
             <a href="./users.php">
               <i class="nc-icon nc-single-02"></i>
               <p>Users</p>
             </a>
           </li>
-          <li>
+          <li class="<?php if($menuName === 'inventories') { echo 'active'; } ?>">
             <a href="./inventories.php">
               <i class="nc-icon nc-tv-2"></i>
               <p>Inventories</p>
