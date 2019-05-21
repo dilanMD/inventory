@@ -299,18 +299,26 @@ if (isset($_POST['transfer'])) {
                   <div class="modal-body">
                     <form method="POST" action="inventories.php">
                       <div class="row">
+                        <?php
+                          $selectInventoryByID = "SELECT * FROM inventories WHERE inventory_id = '$inventoryID'";
+                          $selectInventoryResultForEdit = $conn->query($selectInventoryByID);
+                          if($selectInventoryResultForEdit->num_rows > 0) { 
+                          while($row = $selectInventoryResultForEdit->fetch_assoc()) {
+                        ?>
+                          <input type="hidden" name="inventoryID" value="<?php echo $row['inventory_id'];  ?>" />
                         <div class="col col-md-4">
                           <label for="device">Device</label>
                           <input type="text" name="device" class="form-control" id="device">
                         </div>
                         <div class="form-group col col-md-4">
                             <label for="brand">Brand</label>
-                            <input type="text" name="brand" class="form-control" id="brand" placeholder="">
+                            <input type="text" name="brand" class="form-control" id="brand">
                         </div>
                         <div class="form-group col col-md-4">
                             <label for="serial">Serial</label>
-                            <input type="text" name="serial" class="form-control" id="serial" placeholder="">
+                            <input type="text" name="serial" class="form-control" id="serial">
                         </div>
+                        <?php }} ?>
                       </div>
                       <div class="row">
                         <div class="col col-md-6">
