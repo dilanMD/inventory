@@ -145,8 +145,7 @@ if (isset($_POST['submit'])) {
                           <th>Serial</th>
                           <th>Location</th>
                           <th>User</th>
-                          <th>Edit</th>
-                          <th>Delete</th>
+                          <th>Maintenance</th>
                       </tr>
                   </thead>
                   <tbody>
@@ -180,8 +179,13 @@ if (isset($_POST['submit'])) {
                               }
                             ?>
                           </td>
-                          <td></td>
-                          <td></td>
+                          <td>
+                            <a href="#" title="Transfer to another location"  data-toggle="modal" data-target="#transferLocationModal">
+                              <i class="fas fa-exchange-alt text-warning"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="#" data-toggle="tooltip" title="Remove from this location">
+                              <i class="fas fa-trash-alt text-danger"></i>
+                            </a>
+                        </td>
                       </tr>
                       <?php }} ?>
                   </tbody>
@@ -190,6 +194,77 @@ if (isset($_POST['submit'])) {
               </div>
             </div>
           </div>
+        </div>
+        <div class="row">
+          <div class="col col-md-12">
+            <!-- Modal -->
+            <div class="modal fade" id="transferLocationModal" tabindex="-1" role="dialog" aria-labelledby="transferLocationModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="transferLocationModalLabel">Transfer Inventory</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form method="POST" action="inventories.php">
+                      <div class="row">
+                        <div class="form-group col col-md-6">
+                            <label for="serial">Location From</label>
+                            <?php
+                              $selectLocationByID = "SELECT * FROM `locations` WHERE `location_id` = '$locationID'";
+                              $selectLocationByIDResult = $conn->query($selectLocationByID);
+                              if($selectLocationByIDResult->num_rows > 0) {
+                                $row = $selectLocationByIDResult->fetch_assoc();
+                                echo '<input type="text" name="serial" class="form-control" id="serial" value="' . $row['location_name'] . '" disabled>';
+                              }
+                            ?>
+                        </div>
+                        <div class="col col-md-6">
+                          <label for="location">Location To</label>
+                          <select class="form-control" name="location" id="location" onchange="fetch_select(this.value);">
+                            <?php
+                              if($selectLocationResult->num_rows > 0) { 
+                              while($row = $selectLocationResult->fetch_assoc()) {
+                            ?>
+                            <option value="<?php echo $row['location_id']; ?>"><?php echo $row['location_name']; ?></option>
+                            <?php }} ?>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="form-group col col-md-6">
+                            <label for="serial">User From</label>
+                            <?php
+                              $selectUserByID = "SELECT * FROM `users` WHERE `user_id` = '$userID'";
+                              $selectUserByIDResult = $conn->query($selectUserByID);
+                              if($selectUserByIDResult->num_rows > 0) {
+                                $row = $selectUserByIDResult->fetch_assoc();
+                                echo '<input type="text" name="serial" class="form-control" id="serial" value="' . $row['user_name'] . '" disabled>';
+                              }
+                            ?>
+                        </div>
+                        <div class="col col-md-6">
+                          <label for="location">User To</label>
+                          <select class="form-control" name="location" id="location" onchange="fetch_select(this.value);">
+                            <?php
+                              if($selectLocationResult->num_rows > 0) { 
+                              while($row = $selectLocationResult->fetch_assoc()) {
+                            ?>
+                            <option value="<?php echo $row['location_id']; ?>"><?php echo $row['location_name']; ?></option>
+                            <?php }} ?>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                          <input type="submit" name="submit" class="btn btn-primary btn-md" value="ADD">
+                      </div>
+                  </form>
+                  </div>
+                </div>
+              </div>
+            </div>
         </div>
       </div>
 

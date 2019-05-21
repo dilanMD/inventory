@@ -1,3 +1,10 @@
+<?php session_start(); ?>
+<?php
+if(!isset($_SESSION['username'])) { //if not yet logged in
+   header("Location: ../login.php");// send to login page
+   exit;
+} 
+?>
 <?php 
   $url = $_SERVER['REQUEST_URI'];
   $menuName = substr_replace(substr($url, 17), "", -4);
@@ -100,21 +107,18 @@
           <div class="collapse navbar-collapse justify-content-end" id="navigation">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link btn-magnify" href="#pablo">
+                <a class="nav-link btn-magnify">
                   <i class="nc-icon nc-single-02"></i>
                   <p>
                     <!-- <span class="d-lg-none d-md-block">Stats</span> -->
-                    Deluxan
+                    <?php echo $_SESSION['username']; ?>
                   </p>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link btn-magnify" href="#pablo">
-                  <i class="nc-icon nc-lock-circle-open"></i>
-                  <p>
-                    <!-- <span class="d-lg-none d-md-block">Stats</span> -->
-                    Logout
-                  </p>
+                <a class="nav-link btn-magnify" href="../logout.php">
+<!--                  <i class="nc-icon nc-lock-circle-open"></i>-->
+                  <p>Logout</p>
                 </a>
               </li>
             </ul>

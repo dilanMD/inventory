@@ -76,6 +76,7 @@ if (isset($_POST['submit'])){
                       <tr>
                           <th>User</th>
                           <th>Location</th>
+                          <th>Floor</th>
                           <th>Full View</th>
                           <th>Edit</th>
                           <th>Delete</th>
@@ -102,7 +103,7 @@ if (isset($_POST['submit'])){
                           <td></td>
                           <td></td>
                           <td></td>
-                          
+                          <td></td>
                       </tr>
                       <?php }} ?>
                   </tbody>
@@ -113,22 +114,5 @@ if (isset($_POST['submit'])){
           </div>
         </div>
       </div>
-
-<script>
-  $(document).ready(function(){
-
-    // Initialize select2
-    $("#selUser").select2();
-
-    // Read selected option
-    $('#but_read').click(function(){
-      var username = $('#selUser option:selected').text();
-      var userid = $('#selUser').val();
-
-      $('#result').html("id : " + userid + ", name : " + username);
-
-    });
-  });
-</script>
 
 <?php require './blocks/footer.php'; ?>

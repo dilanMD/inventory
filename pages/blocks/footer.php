@@ -14,16 +14,14 @@
       </footer>
     </div>
   </div>
-	<!-- AJAX	-->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="../assets/js/core/jquery-3.4.1.js"></script>
-  <!--  SELECT2 PLUGIN-->
-  <script src='../../select2/dist/js/select2.min.js' type='text/javascript'></script>
   <!--   Core JS Files   -->
   <script src="../assets/js/core/jquery.min.js"></script>
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap.min.js"></script>
   <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+  <!-- AJAX	-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="../assets/js/core/jquery-3.4.1.js"></script>
   <!-- Chart JS -->
   <script src="../assets/js/plugins/chartjs.min.js"></script>
   <!--  Notifications Plugin    -->
@@ -38,6 +36,30 @@
       demo.initChartsPages();
     });
   </script>
+  
+  <!--  ToolTip -->
+  <script>
+    $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip();   
+    });
+  </script>
+  
+<script type="text/javascript">
+  function fetch_select(val) {
+    $.ajax({
+    type: 'post',
+    url: 'fetch_data.php',
+    data: {
+      get_option: val
+    },
+    success: function (response) {
+      document.getElementById("user").innerHTML=response; 
+    }
+    });
+  }
+
+</script>
+
   <!-- Datatable start -->
   <script>
     $(document).ready(function() {
@@ -59,23 +81,6 @@
   <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
   <!-- Datatable end -->
-  
-  
-<script type="text/javascript">
-  function fetch_select(val) {
-    $.ajax({
-    type: 'post',
-    url: 'fetch_data.php',
-    data: {
-      get_option: val
-    },
-    success: function (response) {
-      document.getElementById("user").innerHTML=response; 
-    }
-    });
-  }
-
-</script>
 </body>
 
 </html>
