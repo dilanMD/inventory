@@ -45,7 +45,7 @@ $usersCount = mysqli_num_rows($users);
               <div class="card-footer ">
                 <hr>
                 <div class="stats">
-                  <!-- <i class="fa fa-refresh"></i> --> Last updated on <span class="text-warning"><strong>18-05-2019</strong></span>
+                  <!-- <i class="fa fa-refresh"></i> --> Updated on <span class="text-warning"><strong>18-05-2019</strong></span>
                 </div>
               </div>
             </div>
@@ -71,7 +71,7 @@ $usersCount = mysqli_num_rows($users);
               <div class="card-footer ">
                 <hr>
                 <div class="stats">
-                  <!-- <i class="fa fa-refresh"></i> --> Last updated on <span class="text-primary"><strong>18-05-2019</strong></span>
+                  <!-- <i class="fa fa-refresh"></i> --> Updated on <span class="text-primary"><strong>18-05-2019</strong></span>
                 </div>
               </div>
             </div>
@@ -97,7 +97,7 @@ $usersCount = mysqli_num_rows($users);
               <div class="card-footer ">
                 <hr>
                 <div class="stats">
-                  <!-- <i class="fa fa-refresh"></i> --> Last updated on <span class="text-success"><strong>18-05-2019</strong></span>
+                  <!-- <i class="fa fa-refresh"></i> --> Updated on <span class="text-success"><strong>18-05-2019</strong></span>
                 </div>
               </div>
             </div>
@@ -123,7 +123,7 @@ $usersCount = mysqli_num_rows($users);
               <div class="card-footer ">
                 <hr>
                 <div class="stats">
-                  <!-- <i class="fa fa-refresh"></i> --> Last updated on <span class="text-danger"><strong>18-05-2019</strong></span>
+                  <!-- <i class="fa fa-refresh"></i> --> Updated on <span class="text-danger"><strong>18-05-2019</strong></span>
                 </div>
               </div>
             </div>

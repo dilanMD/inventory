@@ -12,4 +12,5 @@ if(isset($_POST['get_option']))
  }
  exit;
 }
+
 ?>

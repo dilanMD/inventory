@@ -5,6 +5,7 @@
 //RETRIEVE LOCATIONS
 $selectLocation = "SELECT * FROM `locations`";
 $selectLocationResult = $conn->query($selectLocation);
+$selectLocationResultForTransfer = $conn->query($selectLocation);
 
 //RETRIEVE USERS
 $selectUser = "SELECT * FROM users";
@@ -13,6 +14,7 @@ $selectUserResult = $conn->query($selectUser);
 //RETRIEVE INVENTORIES
 $selectInventory = "SELECT * FROM inventories";
 $selectInventoryResult = $conn->query($selectInventory);
+$selectInventoryResultForTransfer = $conn->query($selectInventory);
 
 //INSERT INVENTORY
 if (isset($_POST['submit'])) {
@@ -25,6 +27,15 @@ if (isset($_POST['submit'])) {
   $insertInventory = "INSERT INTO `inventory`.`inventories` (`inventory_id`, `device`, `brand`, `serial`, `location_id`, `user_id`) VALUES (NULL, '$device', '$brand', '$serial', '$location', '$user');";
 
   $conn->query($insertInventory);
+}
+
+if (isset($_POST['transfer'])) {
+  $transferLocation = $_POST['transferLocation'];
+  $transferUser = $_POST['transferUser'];
+  $inventoryID = $_POST['inventoryID'];
+  
+  $transferInventory = "UPDATE inventories SET location_id = '$transferLocation', user_id = '$transferUser' WHERE inventory_id = '$inventoryID'";
+  $conn->query($transferInventory);
 }
 
 ?>
@@ -180,8 +191,12 @@ if (isset($_POST['submit'])) {
                             ?>
                           </td>
                           <td>
+                            <a href="#" title="Edit Brand and Serial"  data-toggle="modal" data-target="#editInventoryModal">
+                              <i class="fas fa-edit text-warning"></i>
+                            </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <a href="#" title="Transfer to another location"  data-toggle="modal" data-target="#transferLocationModal">
-                              <i class="fas fa-exchange-alt text-warning"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                              <i class="fas fa-exchange-alt text-info"></i>
+                            </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <a href="#" data-toggle="tooltip" title="Remove from this location">
                               <i class="fas fa-trash-alt text-danger"></i>
                             </a>
@@ -210,6 +225,12 @@ if (isset($_POST['submit'])) {
                   <div class="modal-body">
                     <form method="POST" action="inventories.php">
                       <div class="row">
+                        <?php
+                          if($selectInventoryResultForTransfer->num_rows > 0) { 
+                          while($row = $selectInventoryResultForTransfer->fetch_assoc()) {
+                        ?>
+                          <input type="hidden" name="inventoryID" value="<?php echo $row['inventory_id'];  ?>" />
+                        <?php }} ?>
                         <div class="form-group col col-md-6">
                             <label for="serial">Location From</label>
                             <?php
@@ -217,16 +238,16 @@ if (isset($_POST['submit'])) {
                               $selectLocationByIDResult = $conn->query($selectLocationByID);
                               if($selectLocationByIDResult->num_rows > 0) {
                                 $row = $selectLocationByIDResult->fetch_assoc();
-                                echo '<input type="text" name="serial" class="form-control" id="serial" value="' . $row['location_name'] . '" disabled>';
+                                echo '<input type="text" class="form-control" id="serial" value="' . $row['location_name'] . '" disabled>';
                               }
                             ?>
                         </div>
                         <div class="col col-md-6">
                           <label for="location">Location To</label>
-                          <select class="form-control" name="location" id="location" onchange="fetch_select(this.value);">
+                          <select class="form-control" name="transferLocation" id="transferLocation" onchange="fetch_select(this.value);">
                             <?php
-                              if($selectLocationResult->num_rows > 0) { 
-                              while($row = $selectLocationResult->fetch_assoc()) {
+                              if($selectLocationResultForTransfer->num_rows > 0) { 
+                              while($row = $selectLocationResultForTransfer->fetch_assoc()) {
                             ?>
                             <option value="<?php echo $row['location_id']; ?>"><?php echo $row['location_name']; ?></option>
                             <?php }} ?>
@@ -241,12 +262,59 @@ if (isset($_POST['submit'])) {
                               $selectUserByIDResult = $conn->query($selectUserByID);
                               if($selectUserByIDResult->num_rows > 0) {
                                 $row = $selectUserByIDResult->fetch_assoc();
-                                echo '<input type="text" name="serial" class="form-control" id="serial" value="' . $row['user_name'] . '" disabled>';
+                                echo '<input type="text" class="form-control" id="serial" value="' . $row['user_name'] . '" disabled>';
                               }
                             ?>
                         </div>
                         <div class="col col-md-6">
                           <label for="location">User To</label>
+                          <select class="form-control" name="transferUser" id="transferUser">
+                            <!-- Data is loading from "fetch_data.php" -->
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                          <input type="submit" name="transfer" class="btn btn-primary btn-md" value="TRANSFER">
+                      </div>
+                  </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+        
+        <div class="row">
+          <div class="col col-md-12">
+            <!-- Modal -->
+            <div class="modal fade" id="editInventoryModal" tabindex="-1" role="dialog" aria-labelledby="editInventoryModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="transferLocationModalLabel">Edit Inventory</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form method="POST" action="inventories.php">
+                      <div class="row">
+                        <div class="col col-md-4">
+                          <label for="device">Device</label>
+                          <input type="text" name="device" class="form-control" id="device">
+                        </div>
+                        <div class="form-group col col-md-4">
+                            <label for="brand">Brand</label>
+                            <input type="text" name="brand" class="form-control" id="brand" placeholder="">
+                        </div>
+                        <div class="form-group col col-md-4">
+                            <label for="serial">Serial</label>
+                            <input type="text" name="serial" class="form-control" id="serial" placeholder="">
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col col-md-6">
+                          <label for="location">Location</label>
                           <select class="form-control" name="location" id="location" onchange="fetch_select(this.value);">
                             <?php
                               if($selectLocationResult->num_rows > 0) { 
@@ -254,6 +322,12 @@ if (isset($_POST['submit'])) {
                             ?>
                             <option value="<?php echo $row['location_id']; ?>"><?php echo $row['location_name']; ?></option>
                             <?php }} ?>
+                          </select>
+                        </div>
+                        <div class="col col-md-6">
+                          <label for="user">User</label>
+                          <select class="form-control" name="user" id="user">
+                            <!-- Data is loading from "fetch_data.php" -->
                           </select>
                         </div>
                       </div>
