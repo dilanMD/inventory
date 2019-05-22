@@ -299,48 +299,31 @@ if (isset($_POST['transfer'])) {
                   <div class="modal-body">
                     <form method="POST" action="inventories.php">
                       <div class="row">
-                        <?php
-                          $selectInventoryByID = "SELECT * FROM inventories WHERE inventory_id = '$inventoryID'";
-                          $selectInventoryResultForEdit = $conn->query($selectInventoryByID);
-                          if($selectInventoryResultForEdit->num_rows > 0) { 
-                          while($row = $selectInventoryResultForEdit->fetch_assoc()) {
-                        ?>
-                          <input type="hidden" name="inventoryID" value="<?php echo $row['inventory_id'];  ?>" />
                         <div class="col col-md-4">
                           <label for="device">Device</label>
-                          <input type="text" name="device" class="form-control" id="device">
+                          <input type="text" name="device" class="form-control" id="serial" readonly>
                         </div>
                         <div class="form-group col col-md-4">
                             <label for="brand">Brand</label>
-                            <input type="text" name="brand" class="form-control" id="brand">
+                            <input type="text" name="brandEdit" class="form-control" id="brandEdit">
                         </div>
                         <div class="form-group col col-md-4">
                             <label for="serial">Serial</label>
-                            <input type="text" name="serial" class="form-control" id="serial">
+                            <input type="text" name="serialEdit" class="form-control" id="serialEdit">
                         </div>
-                        <?php }} ?>
                       </div>
                       <div class="row">
                         <div class="col col-md-6">
                           <label for="location">Location</label>
-                          <select class="form-control" name="location" id="location" onchange="fetch_select(this.value);">
-                            <?php
-                              if($selectLocationResult->num_rows > 0) { 
-                              while($row = $selectLocationResult->fetch_assoc()) {
-                            ?>
-                            <option value="<?php echo $row['location_id']; ?>"><?php echo $row['location_name']; ?></option>
-                            <?php }} ?>
-                          </select>
+                          <input type="text" name="location" class="form-control" id="location" readonly>
                         </div>
                         <div class="col col-md-6">
                           <label for="user">User</label>
-                          <select class="form-control" name="user" id="user">
-                            <!-- Data is loading from "fetch_data.php" -->
-                          </select>
+                          <input type="text" name="userEdit" class="form-control" id="userEdit" readonly>
                         </div>
                       </div>
                       <div class="form-group">
-                          <input type="submit" name="submit" class="btn btn-primary btn-md" value="ADD">
+                          <input type="submit" name="edit" class="btn btn-primary btn-md" value="EDIT">
                       </div>
                   </form>
                   </div>

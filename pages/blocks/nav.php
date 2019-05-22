@@ -44,13 +44,15 @@ if(!isset($_SESSION['username'])) { //if not yet logged in
         Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
     -->
       <div class="logo">
+<!--
         <a href="dashboard.php" class="simple-text logo-mini">
           <div class="logo-image-small">
             <img src="../assets/img/logo-small.png">
           </div>
         </a>
+-->
         <a href="dashboard.php" class="simple-text logo-normal">
-          Inventory 
+          Inventory Management
           <!-- <div class="logo-image-big">
             <img src="../assets/img/logo-big.png">
           </div> -->

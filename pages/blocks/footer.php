@@ -53,20 +53,8 @@
       get_option: val
     },
     success: function (response) {
-      document.getElementById("user").innerHTML=response; 
-    }
-    });
-  }
-  
-  function fetch_select(val) {
-    $.ajax({
-    type: 'post',
-    url: 'fetch_data.php',
-    data: {
-      get_option: val
-    },
-    success: function (response) {
-      document.getElementById("transferUser").innerHTML=response; 
+      document.getElementById("user").innerHTML=response;
+      document.getElementById("transferUser").innerHTML=response;
     }
     });
   }
