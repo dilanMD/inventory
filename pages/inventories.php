@@ -11,11 +11,6 @@ $selectLocationResultForTransfer = $conn->query($selectLocation);
 $selectUser = "SELECT * FROM users";
 $selectUserResult = $conn->query($selectUser);
 
-//RETRIEVE INVENTORIES
-$selectInventory = "SELECT * FROM inventories";
-$selectInventoryResult = $conn->query($selectInventory);
-$selectInventoryResultForTransfer = $conn->query($selectInventory);
-
 //INSERT INVENTORY
 if (isset($_POST['submit'])) {
   $device = $_POST['device'];
@@ -37,6 +32,49 @@ if (isset($_POST['transfer'])) {
   $transferInventory = "UPDATE inventories SET location_id = '$transferLocation', user_id = '$transferUser' WHERE inventory_id = '$inventoryID'";
   $conn->query($transferInventory);
 }
+
+//EDIT INVENTORY
+if(isset($_POST['edit'])) {
+  $inventoryID = $_POST['inventoryID'];
+  $brandEdit = $_POST['brandEdit'];
+  $serialEdit = $_POST['serialEdit'];
+
+  $editInventory = "UPDATE `inventories` SET `brand` = '$brandEdit', `serial` = '$serialEdit' WHERE `inventories`.`inventory_id` = '$inventoryID'";
+  $conn->query($editInventory);
+}
+
+//TRANSFER INVENTORY
+if(isset($_POST['transfer'])) {
+  $inventoryID = $_POST['inventoryID'];
+  $transferLocation = $_POST['transferLocation'];
+  $transferUser = $_POST['transferUser'];
+
+  $editInventory = "UPDATE `inventories` SET `location_id` = '$transferLocation', `user_id` = '$transferUser' WHERE `inventories`.`inventory_id` = '$inventoryID'";
+  $conn->query($editInventory);
+}
+
+//DELETE INVENTORY
+if(isset($_GET['deleteID'])) {
+  $deleteID = $_GET['deleteID'];
+  $deleteInventory = "DELETE FROM inventories WHERE inventory_id = '$deleteID'";
+  $conn->query($deleteInventory);
+}
+
+//RETRIEVE INVENTORIES
+$selectInventory = "SELECT 
+                          `inventories`.`inventory_id`, 
+                          `inventories`.`device`, 
+                          `inventories`.`brand`, 
+                          `inventories`.`serial`, 
+                          `locations`.`location_name`, 
+                          `users`.`user_name` 
+                    FROM `inventories` 
+                    INNER JOIN `users` 
+                    ON `inventories`.`user_id` = `users`.`user_id` 
+                    INNER JOIN `locations` 
+                    ON `users`.`location_id` = `locations`.`location_id`";
+$selectInventoryResult = $conn->query($selectInventory);
+$selectInventoryResultForEdit = $conn->query($selectInventory);
 
 ?>
       <div class="content">
@@ -163,45 +201,39 @@ if (isset($_POST['transfer'])) {
                       <?php
                         if($selectInventoryResult->num_rows > 0) { 
                         while($row = $selectInventoryResult->fetch_assoc()) {
-                          $locationID = $row['location_id'];
-                          $userID = $row['user_id'];
                       ?>
                       <tr>
                           <td><?php echo $row['device']; ?></td>
                           <td><?php echo $row['brand']; ?></td>
                           <td><?php echo $row['serial']; ?></td>
+                          <td><?php echo $row['location_name']; ?></td>
+                          <td><?php echo $row['user_name']; ?></td>
                           <td>
-                            <?php
-                              $selectLocationByID = "SELECT * FROM `locations` WHERE `location_id` = '$locationID'";
-                              $selectLocationByIDResult = $conn->query($selectLocationByID);
-                              if($selectLocationByIDResult->num_rows > 0) {
-                                $row = $selectLocationByIDResult->fetch_assoc();
-                                echo $row['location_name'];
-                              }
-                            ?>
-                          </td>
-                          <td>
-                            <?php
-                              $selectUserByID = "SELECT * FROM `users` WHERE `user_id` = '$userID'";
-                              $selectUserByIDResult = $conn->query($selectUserByID);
-                              if($selectUserByIDResult->num_rows > 0) {
-                                $row = $selectUserByIDResult->fetch_assoc();
-                                echo $row['user_name'];
-                              }
-                            ?>
-                          </td>
-                          <td>
-                            <a href="#" title="Edit Brand and Serial"  data-toggle="modal" data-target="#editInventoryModal">
-                              <i class="fas fa-edit text-warning"></i>
+                            <a href="edit_inventory.php?editID=<?php echo $row['inventory_id']; ?>" title="Edit Brand and Serial">
+                              <i class="fas fa-edit text-warning" class="editModalToggle"></i>
                             </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <a href="#" title="Transfer to another location"  data-toggle="modal" data-target="#transferLocationModal">
+                            <a href="transfer_inventory.php?editID=<?php echo $row['inventory_id']; ?>" title="Transfer to another location">
                               <i class="fas fa-exchange-alt text-info"></i>
                             </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <a href="#" data-toggle="tooltip" title="Remove from this location">
+                            <a href="#?deleteID=<?php echo $row['inventory_id']; ?>" data-toggle="modal" data-target="#deleteInventoryModal" data-toggle="tooltip" title="Remove from this location">
                               <i class="fas fa-trash-alt text-danger"></i>
                             </a>
                         </td>
                       </tr>
+                        <!-- Modal -->
+                        <div class="modal fade" id="deleteInventoryModal" tabindex="-1" role="dialog" aria-labelledby="deleteInventoryModalLabel" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="deleteInventoryModalLabel">Do you want to remove this inventory?</h5>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-danger" id="removeInventory" onclick="delete_inventory(<?php echo $row['inventory_id']; ?>);">Remove Inventory</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       <?php }} ?>
                   </tbody>
               </table>
@@ -210,127 +242,13 @@ if (isset($_POST['transfer'])) {
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col col-md-12">
-            <!-- Modal -->
-            <div class="modal fade" id="transferLocationModal" tabindex="-1" role="dialog" aria-labelledby="transferLocationModalLabel" aria-hidden="true">
-              <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="transferLocationModalLabel">Transfer Inventory</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    <form method="POST" action="inventories.php">
-                      <div class="row">
-                        <?php
-                          if($selectInventoryResultForTransfer->num_rows > 0) { 
-                          while($row = $selectInventoryResultForTransfer->fetch_assoc()) {
-                        ?>
-                          <input type="hidden" name="inventoryID" value="<?php echo $row['inventory_id'];  ?>" />
-                        <?php }} ?>
-                        <div class="form-group col col-md-6">
-                            <label for="serial">Location From</label>
-                            <?php
-                              $selectLocationByID = "SELECT * FROM `locations` WHERE `location_id` = '$locationID'";
-                              $selectLocationByIDResult = $conn->query($selectLocationByID);
-                              if($selectLocationByIDResult->num_rows > 0) {
-                                $row = $selectLocationByIDResult->fetch_assoc();
-                                echo '<input type="text" class="form-control" id="serial" value="' . $row['location_name'] . '" disabled>';
-                              }
-                            ?>
-                        </div>
-                        <div class="col col-md-6">
-                          <label for="location">Location To</label>
-                          <select class="form-control" name="transferLocation" id="transferLocation" onchange="fetch_select(this.value);">
-                            <?php
-                              if($selectLocationResultForTransfer->num_rows > 0) { 
-                              while($row = $selectLocationResultForTransfer->fetch_assoc()) {
-                            ?>
-                            <option value="<?php echo $row['location_id']; ?>"><?php echo $row['location_name']; ?></option>
-                            <?php }} ?>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="form-group col col-md-6">
-                            <label for="serial">User From</label>
-                            <?php
-                              $selectUserByID = "SELECT * FROM `users` WHERE `user_id` = '$userID'";
-                              $selectUserByIDResult = $conn->query($selectUserByID);
-                              if($selectUserByIDResult->num_rows > 0) {
-                                $row = $selectUserByIDResult->fetch_assoc();
-                                echo '<input type="text" class="form-control" id="serial" value="' . $row['user_name'] . '" disabled>';
-                              }
-                            ?>
-                        </div>
-                        <div class="col col-md-6">
-                          <label for="location">User To</label>
-                          <select class="form-control" name="transferUser" id="transferUser">
-                            <!-- Data is loading from "fetch_data.php" -->
-                          </select>
-                        </div>
-                      </div>
-                      <div class="form-group">
-                          <input type="submit" name="transfer" class="btn btn-primary btn-md" value="TRANSFER">
-                      </div>
-                  </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-        </div>
-      </div>
         
-        <div class="row">
-          <div class="col col-md-12">
-            <!-- Modal -->
-            <div class="modal fade" id="editInventoryModal" tabindex="-1" role="dialog" aria-labelledby="editInventoryModalLabel" aria-hidden="true">
-              <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="transferLocationModalLabel">Edit Inventory</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    <form method="POST" action="inventories.php">
-                      <div class="row">
-                        <div class="col col-md-4">
-                          <label for="device">Device</label>
-                          <input type="text" name="device" class="form-control" id="serial" readonly>
-                        </div>
-                        <div class="form-group col col-md-4">
-                            <label for="brand">Brand</label>
-                            <input type="text" name="brandEdit" class="form-control" id="brandEdit">
-                        </div>
-                        <div class="form-group col col-md-4">
-                            <label for="serial">Serial</label>
-                            <input type="text" name="serialEdit" class="form-control" id="serialEdit">
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col col-md-6">
-                          <label for="location">Location</label>
-                          <input type="text" name="location" class="form-control" id="location" readonly>
-                        </div>
-                        <div class="col col-md-6">
-                          <label for="user">User</label>
-                          <input type="text" name="userEdit" class="form-control" id="userEdit" readonly>
-                        </div>
-                      </div>
-                      <div class="form-group">
-                          <input type="submit" name="edit" class="btn btn-primary btn-md" value="EDIT">
-                      </div>
-                  </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-        </div>
-      </div>
+<script>
+$(document).ready(function() {
+    function delete_inventory() {
+      $("#deleteInventoryModal").modal("hide");
+    }
+});        
+</script>
 
 <?php require './blocks/footer.php'; ?>

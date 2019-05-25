@@ -1,4 +1,5 @@
 <?php session_start(); ?>
+<?php //error_reporting(0); ?>
 <?php
 if(!isset($_SESSION['username'])) { //if not yet logged in
    header("Location: ../login.php");// send to login page
@@ -52,7 +53,7 @@ if(!isset($_SESSION['username'])) { //if not yet logged in
         </a>
 -->
         <a href="dashboard.php" class="simple-text logo-normal">
-          Inventory Management
+          iMS
           <!-- <div class="logo-image-big">
             <img src="../assets/img/logo-big.png">
           </div> -->
@@ -99,7 +100,7 @@ if(!isset($_SESSION['username'])) { //if not yet logged in
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand"><?php echo $menuName; ?></a>
+            <a class="navbar-brand"><?php //echo $menuName; ?>Inventory Management System</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>

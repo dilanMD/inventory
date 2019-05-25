@@ -30,6 +30,24 @@
   <script src="../assets/js/paper-dashboard.min.js?v=2.0.0" type="text/javascript"></script>
   <!-- Paper Dashboard DEMO methods, don't include it in your project! -->
   <script src="../assets/demo/demo.js"></script>
+
+  <!-- FETCH ID FROM INVENTORY -->
+  <script>
+    $(document).on("click", ".transferModalToggle", function () {
+      var inventoryID = $(this).data('id');
+      console.log(inventoryID);
+      $(".modal-body #inventoryID").val( inventoryID );
+      $('#transferLocationModal').modal('show');
+    });
+    
+    $(document).on("click", ".editModalToggle", function () {
+      var inventoryID = $(this).data('id');
+      console.log(inventoryID);
+      $(".modal-body #editID").val( inventoryID );
+      $('#editInventoryModal').modal('show');
+    });
+  </script>
+  
   <script>
     $(document).ready(function() {
       // Javascript method's body can be found in assets/assets-for-demo/js/demo.js
@@ -54,9 +72,19 @@
     },
     success: function (response) {
       document.getElementById("user").innerHTML=response;
-      document.getElementById("transferUser").innerHTML=response;
     }
     });
+  }
+  
+  function delete_inventory(val) {
+    $.ajax({
+    type: 'post',
+    url: 'fetch_data.php',
+    data: {
+      delete_id: val
+    }
+    });
+    $('#deleteInventoryModal').modal('hide');
   }
 
 </script>
