@@ -2,10 +2,6 @@
 <?php require './blocks/nav.php'; ?>
 <?php
 
-//RETRIEVE LOCATIONS
-$selectLocation = "SELECT * FROM `locations`";
-$selectLocationResult = $conn->query($selectLocation);
-
 //INSERT LOCATION
 if (isset($_POST['submit'])){
     $location = $_POST['location'];
@@ -16,6 +12,21 @@ if (isset($_POST['submit'])){
     
     $conn->query($insertLocation);
 }
+
+//UPDATE LOCATION
+if(isset($_POST['edit'])) {
+  $location_id = $_POST['location_id'];
+  $editLocation = $_POST['editLocation'];
+  $editUsers = $_POST['editUsers'];
+  $editFloor = $_POST['editFloor'];
+  
+  $editLocation = "UPDATE `locations` SET `location_name` = '$editLocation', `floor` = '$editFloor', `users` = '$editUsers' WHERE `inventories`.`location_id` = '$location_id'";
+  $conn->query($editLocation);
+}
+
+//RETRIEVE LOCATIONS
+$selectLocation = "SELECT * FROM `locations`";
+$selectLocationResult = $conn->query($selectLocation);
 
 ?>
       <div class="content" onload="addRecord()">
@@ -114,7 +125,11 @@ if (isset($_POST['submit'])){
                           <td><?php echo $row['floor']; ?></td>
                           <td><?php echo $row['users']; ?></td>
                           <td><i class="fas fa-table text-info"></i></td>
-                          <td><i class="fas fa-pencil-alt text-warning"></i></td>
+                          <td>
+                            <a href="edit_locations.php?editID=<?php echo $row['location_id']; ?>">
+                              <i class="fas fa-pencil-alt text-warning"></i>
+                            </a>
+                          </td>
                           <td><i class="fas fa-trash-alt text-danger"></i></td>
                       </tr>
                       <?php }} ?>

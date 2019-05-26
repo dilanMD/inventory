@@ -55,8 +55,8 @@ if(isset($_POST['transfer'])) {
 
 //DELETE INVENTORY
 if(isset($_GET['deleteID'])) {
-  $deleteID = $_GET['deleteID'];
-  $deleteInventory = "DELETE FROM inventories WHERE inventory_id = '$deleteID'";
+  echo $deleteID = $_POST['deleteID'];
+  $deleteInventory = "DELETE FROM `inventories` WHERE `inventory_id` = '$deleteID'";
   $conn->query($deleteInventory);
 }
 
@@ -215,9 +215,11 @@ $selectInventoryResultForEdit = $conn->query($selectInventory);
                             <a href="transfer_inventory.php?editID=<?php echo $row['inventory_id']; ?>" title="Transfer to another location">
                               <i class="fas fa-exchange-alt text-info"></i>
                             </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <a href="#?deleteID=<?php echo $row['inventory_id']; ?>" data-toggle="modal" data-target="#deleteInventoryModal" data-toggle="tooltip" title="Remove from this location">
+<!--
+                            <a href="" data-toggle="modal" data-target="#deleteInventoryModal" data-toggle="tooltip" title="Remove from this location">
                               <i class="fas fa-trash-alt text-danger"></i>
                             </a>
+-->
                         </td>
                       </tr>
                         <!-- Modal -->
@@ -228,8 +230,11 @@ $selectInventoryResultForEdit = $conn->query($selectInventory);
                                 <h5 class="modal-title" id="deleteInventoryModalLabel">Do you want to remove this inventory?</h5>
                               </div>
                               <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                <button type="button" class="btn btn-danger" id="removeInventory" onclick="delete_inventory(<?php echo $row['inventory_id']; ?>);">Remove Inventory</button>
+                                <form method="post" action="inventories.php">
+                                  <input type="hidden" name="deleteID" value="<?php echo $row['inventory_id']; ?>" />
+                                  <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Cancel" />
+                                  <input type="submit" class="btn btn-danger" name="delete" data-dismiss="modal" value="Remove Inventory" />
+                                </form>
                               </div>
                             </div>
                           </div>
@@ -242,13 +247,5 @@ $selectInventoryResultForEdit = $conn->query($selectInventory);
             </div>
           </div>
         </div>
-        
-<script>
-$(document).ready(function() {
-    function delete_inventory() {
-      $("#deleteInventoryModal").modal("hide");
-    }
-});        
-</script>
 
 <?php require './blocks/footer.php'; ?>

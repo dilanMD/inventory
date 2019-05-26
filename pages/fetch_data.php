@@ -13,14 +13,4 @@ if(isset($_POST['get_option']))
  exit;
 }
 
-if(isset($_POST['delete_id']))
-{
- require 'assets/connection.php';
-
- $delete_id = $_POST['delete_id'];
- $deleteInventoryByID = "DELETE FROM `inventories` WHERE `inventory_id` = '$delete_id'";
- $deleteInventoryByIDResult = $conn->query($deleteInventoryByID);
- exit;
-}
-
 ?>
