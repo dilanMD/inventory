@@ -34,12 +34,14 @@ if (isset($_POST['transfer'])) {
 }
 
 //EDIT INVENTORY
+date_default_timezone_set("Asia/Colombo");
+$currentDateAndTime = date("Y-m-d h:i:s");
 if(isset($_POST['edit'])) {
   $inventoryID = $_POST['inventoryID'];
   $brandEdit = $_POST['brandEdit'];
   $serialEdit = $_POST['serialEdit'];
 
-  $editInventory = "UPDATE `inventories` SET `brand` = '$brandEdit', `serial` = '$serialEdit' WHERE `inventories`.`inventory_id` = '$inventoryID'";
+  $editInventory = "UPDATE `inventories` SET `brand` = '$brandEdit', `serial` = '$serialEdit', `updated_on` = '$currentDateAndTime' WHERE `inventories`.`inventory_id` = '$inventoryID'";
   $conn->query($editInventory);
 }
 

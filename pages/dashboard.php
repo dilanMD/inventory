@@ -4,13 +4,12 @@
 $pc = mysqli_query($conn, "SELECT * FROM inventories WHERE 
   device = 'All in one PC' || 
   device = 'CPU' || 
-  device = 'Server PC' || 
-  device = 'Laptop'");
+  device = 'Server PC'");
 $pcCount = mysqli_num_rows($pc);
 
 //TOTAL UPS
-$ups = mysqli_query($conn, "SELECT * FROM inventories WHERE device = 'UPS'");
-$upsCount = mysqli_num_rows($ups);
+$laptop = mysqli_query($conn, "SELECT * FROM inventories WHERE device = 'Laptop'");
+$laptopCount = mysqli_num_rows($laptop);
   
 //TOTAL LOCATIONS
 $location = mysqli_query($conn, "SELECT * FROM locations");
@@ -19,6 +18,13 @@ $locationCount = mysqli_num_rows($location);
 //TOTAL USERS
 $users = mysqli_query($conn, "SELECT * FROM users");
 $usersCount = mysqli_num_rows($users);
+
+
+//DATA FOR CHART
+$dataPoints = array( 
+	array("label"=>"PC", "symbol" => "pc","y"=>"$pcCount"),
+	array("label"=>"UPS", "symbol" => "ups","y"=>"$laptopCount"), 
+)
   
 ?>
 <?php require './blocks/nav.php'; ?>
@@ -56,13 +62,13 @@ $usersCount = mysqli_num_rows($users);
                 <div class="row">
                   <div class="col-5 col-md-4">
                     <div class="icon-big text-center icon-warning">
-                      <i class="nc-icon nc-box text-primary"></i>
+                      <i class="nc-icon nc-laptop text-primary"></i>
                     </div>
                   </div>
                   <div class="col-7 col-md-8">
                     <div class="numbers">
-                      <p class="card-category">UPS</p>
-                      <p class="card-title"><?php echo $upsCount; ?>
+                      <p class="card-category">LAPTOP</p>
+                      <p class="card-title"><?php echo $laptopCount; ?>
                         <p>
                     </div>
                   </div>
@@ -127,6 +133,12 @@ $usersCount = mysqli_num_rows($users);
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col col-md-6">
+            <div id="chartContainer" style="width: 100%; height: 300px;"></div>
           </div>
         </div>
 			</div>

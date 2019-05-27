@@ -36,6 +36,8 @@ if(!isset($_SESSION['username'])) { //if not yet logged in
   <!-- Datatables stylesheet -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css" rel="stylesheet" />
   <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+  <!-- ChartJS 2 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" />
 </head>
 
 <body class="">
